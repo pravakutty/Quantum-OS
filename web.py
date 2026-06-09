@@ -51,6 +51,18 @@ def home():
         .cards {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
+            @media (max-width: 768px) 
+                {
+            .cards {
+                    grid-template-columns: 1fr;
+                   }
+            .title {
+                    font-size: 32px;
+                   }
+            .card {
+                   padding: 20px;
+                  }
+                }
             gap: 20px;
             margin-top: 30px;
         }
