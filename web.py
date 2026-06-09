@@ -8,8 +8,9 @@ simulator = AerSimulator()
 
 def run_circuit(qc):
     qc.measure_all()
-    result = simulator.run(qc, short=1000).result()
+    result = simulator.run(qc, shots=1000).result()
     return result.get_counts()
+
 @app.route('/')
 def home():
     return render_template_string('''
@@ -18,53 +19,189 @@ def home():
 <head>
     <title>Quantum OS</title>
     <style>
-    body{background-color: white;font-family:Arial;text-align:center;padding:50px;}
-    h1{color:cyan;font-size: 48px;}
-    button{padding: 15px 40px; 
-           margin:10px;
-           font-size: 20px;
-           border: none;
-           border-radius:10px;
-           cursor: pointer;}
-        .btn1 { background: blue; color: white; }
-        .btn2 { background: red; color: white; }
-        .btn3 { background: purple; color: white; }
-        #result {
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            background: #000;
+            color: white;
+            font-family: Arial;
+            min-height: 100vh;
+        }
+        .header {
+            background: linear-gradient(135deg, #0a0a2e, #1a1a4e);
+            padding: 40px;
+            text-align: center;
+            border-bottom: 2px solid #00ffff;
+        }
+        .title {
+            font-size: 48px;
+            font-weight: bold;
+            color: #00ffff;
+            text-shadow: 0 0 20px #00ffff;
+        }
+        .subtitle {
+            color: #888;
+            margin-top: 10px;
+            font-size: 18px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
             margin-top: 30px;
-            font-size: 24px;
-            color: black;}
+        }
+        .card {
+            background: #0a0a2e;
+            border-radius: 15px;
+            padding: 30px 20px;
+            text-align: center;
+            border: 1px solid #333;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #00ffff;
+            box-shadow: 0 0 20px rgba(0,255,255,0.3);
+        }
+        .card-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        .card-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #00ffff;
+        }
+        .card-desc {
+            color: #888;
+            font-size: 14px;
+        }
+        .btn {
+            margin-top: 20px;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        .btn1 { background: #0066ff; color: white; }
+        .btn2 { background: #ff3333; color: white; }
+        .btn3 { background: #9933ff; color: white; }
+        .btn:hover { opacity: 0.8; transform: scale(1.05); }
+        .result-box {
+            margin-top: 30px;
+            background: #0a0a2e;
+            border: 1px solid #00ffff;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            display: none;
+        }
+        .result-title {
+            color: #00ffff;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+        .result-data {
+            color: #fff;
+            font-size: 18px;
+        }
+        .loading {
+            color: #888;
+            font-size: 18px;
+        }
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: #444;
+            border-top: 1px solid #222;
+            margin-top: 50px;
+        }
     </style>
 </head>
 <body>
-    <h1>⚛️ Welcome to Quantum OS</h1>
-    <p style="color:gray">
-        Quantum Computing on Normal Laptop!
-    </p>
-    <br>
-    <button class="btn1" 
-        onclick="run('entanglement')">
-        Entanglement
-    </button>
-    <button class="btn2" 
-        onclick="run('superposition')">
-        Superposition
-    </button>
-    <button class="btn3" 
-        onclick="run('teleportation')">
-        Teleportation
-    </button>
-    <div id="result"></div>
+    <div class="header">
+        <div class="title">⚛️ Quantum OS</div>
+        <div class="subtitle">
+            Quantum Computing on Normal Laptop & Phone
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="cards">
+            <div class="card">
+                <div class="card-icon">🔗</div>
+                <div class="card-title">Entanglement</div>
+                <div class="card-desc">
+                    2 qubits instantly connected
+                </div>
+                <button class="btn btn1"
+                    onclick="run('entanglement')">
+                    Run
+                </button>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">⚡</div>
+                <div class="card-title">Superposition</div>
+                <div class="card-desc">
+                    0 and 1 at the same time
+                </div>
+                <button class="btn btn2"
+                    onclick="run('superposition')">
+                    Run
+                </button>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">🌀</div>
+                <div class="card-title">Teleportation</div>
+                <div class="card-desc">
+                    Quantum state transfer
+                </div>
+                <button class="btn btn3"
+                    onclick="run('teleportation')">
+                    Run
+                </button>
+            </div>
+        </div>
+
+        <div class="result-box" id="result-box">
+            <div class="result-title" id="result-title">
+                Result
+            </div>
+            <div class="result-data" id="result-data">
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        Built with ❤️ using Python + Qiskit |
+        Quantum Computing for Everyone
+    </div>
+
     <script>
         function run(type) {
-            document.getElementById('result')
-                .innerHTML = 'Running...';
+            var box = document.getElementById('result-box');
+            var data = document.getElementById('result-data');
+            var title = document.getElementById('result-title');
+            box.style.display = 'block';
+            data.innerHTML = '⏳ Running quantum simulation...';
+            title.innerHTML = type.toUpperCase();
             fetch('/run/' + type)
                 .then(r => r.json())
-                .then(data => {
-                    document.getElementById('result')
-                        .innerHTML = 
-                        'Result: ' + 
-                        JSON.stringify(data.counts);
+                .then(res => {
+                    data.innerHTML = 
+                        '✅ Result: ' + 
+                        JSON.stringify(res.counts);
                 });
         }
     </script>
@@ -98,11 +235,3 @@ def teleportation():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=10000)
-                                                                
-
-
-
-
-
-
-
