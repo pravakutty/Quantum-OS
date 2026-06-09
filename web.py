@@ -224,23 +224,41 @@ def home():
         Quantum Computing for Everyone
     </div>
 
-    <script>
-        function run(type) {
-            var box = document.getElementById('result-box');
-            var data = document.getElementById('result-data');
-            var title = document.getElementById('result-title');
-            box.style.display = 'block';
-            data.innerHTML = '⏳ Running quantum simulation...';
-            title.innerHTML = type.toUpperCase();
-            fetch('/run/' + type)
-                .then(r => r.json())
-                .then(res => {
-                    data.innerHTML = 
-                        '✅ Result: ' + 
-                        JSON.stringify(res.counts);
-                });
-        }
-    </script>
+   <script>
+    function run(type) {
+        var box = document.getElementById('result-box');
+        var data = document.getElementById('result-data');
+        var title = document.getElementById('result-title');
+        box.style.display = 'block';
+        data.innerHTML = '⏳ Running quantum simulation...';
+        title.innerHTML = type.toUpperCase();
+        fetch('/run/' + type)
+            .then(r => r.json())
+            .then(res => {
+                let counts = res.counts;
+                let sorted = Object.entries(counts)
+                    .sort((a,b) => b[1]-a[1]);
+                let max = sorted[0][1];
+                let html = '✅ Results:<br><br>';
+                for(let [state, count] of sorted) {
+                    let pct = Math.round(count/max*100);
+                    html += `
+                    <div style="margin:10px 20px;
+                    display:flex;align-items:center;gap:10px">
+                       <span style="color:#fff;
+                       font-size:14px;width:30px;
+                       text-align:right">${state}</span>
+                       <div style="background:#00ffff;
+                       height:20px;width:${pct}%;
+                       border-radius:5px;min-width:5px"></div>
+                       <span style="color:#888;
+                       font-size:14px">${count}</span>
+                </div>`;
+                }
+                data.innerHTML = html;
+            });
+    }
+</script>
 </body>
 </html>
 ''')
