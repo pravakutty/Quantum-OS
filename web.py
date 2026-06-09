@@ -172,6 +172,42 @@ def home():
                     Run
                 </button>
             </div>
+
+             <div class="card">
+                <div class="card-icon">〰️</div>
+                <div class="card-title">Interference</div>
+                <div class="card-desc">
+                    Quantum waves combining
+                </div>
+                <button class="btn btn1"
+                    onclick="run('interference')">
+                    Run
+                </button>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">🔍</div>
+                <div class="card-title">Grover's Search</div>
+                <div class="card-desc">
+                    Quantum search algorithm
+                </div>
+                <button class="btn btn2"
+                    onclick="run('grover')">
+                    Run
+                </button>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">📊</div>
+                <div class="card-title">Fourier Transform</div>
+                <div class="card-desc">
+                    Quantum signal processing
+                </div>
+                <button class="btn btn3"
+                    onclick="run('fourier')">
+                    Run
+                </button>
+            </div>                                          
         </div>
 
         <div class="result-box" id="result-box">
@@ -233,5 +269,30 @@ def teleportation():
     counts = run_circuit(qc)
     return json.dumps({'counts': counts})
 
+@app.route('/run/interference')
+def interference():
+    qc = QuantumCircuit(1)
+    qc.h(0)
+    qc.h(0)
+    counts = run_circuit(qc)
+    return json.dumps({'counts': counts})
+
+@app.route('/run/grover')
+def grover():
+    qc = QuantumCircuit(2)
+    qc.h([0,1])
+    qc.cz(0,1)
+    qc.h([0,1])
+    counts = run_circuit(qc)
+    return json.dumps({'counts': counts})
+
+@app.route('/run/fourier')
+def fourier():
+    qc = QuantumCircuit(2)
+    qc.h(0)
+    qc.cp(3.14159/2, 0, 1)
+    qc.h(1)
+    counts = run_circuit(qc)
+    return json.dumps({'counts': counts})
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=10000)
