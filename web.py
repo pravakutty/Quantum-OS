@@ -232,6 +232,70 @@ def home():
     </div>
 
     <div class="footer">
+        <div style="max-width:900px;margin:40px auto;
+padding:20px;background:#0a0a2e;
+border-radius:15px;border:1px solid #333">
+    <h2 style="color:#00ffff;text-align:center;
+    margin-bottom:20px">⚛️ About Quantum OS</h2>
+
+    <h3 style="color:#00ffff;margin:20px 0 10px;text-align:left">
+    👨‍🔬 Builder
+    </h3>
+    <p style="color:#aaa;line-height:1.8;text-align:left">
+    <b style="color:white">S. Praveen</b><br>
+    M.Sc Physics — (MK University) <br>
+    Melur, Madurai.<br>
+    sapraveen81900@gmail.com <br>                            
+
+    <h3 style="color:#00ffff;margin:20px 0 10px">
+    💡 Why I Built This
+    </h3>
+    <p style="color:#aaa;line-height:1.8">
+    Quantum Computers are extremely expensive — 
+    only the world's biggest companies like IBM, 
+    Google, and Microsoft can afford them. 
+    Small startups and small companies cannot 
+    access quantum computing power.<br><br>
+    So I decided to build Quantum Models based 
+    on quantum computing basics that can run 
+    on normal computers — making quantum 
+    computing accessible to everyone!
+    </p>
+
+    <h3 style="color:#00ffff;margin:20px 0 10px">
+    🎯 Vision
+    </h3>
+    <p style="color:#aaa;line-height:1.8">
+    To make Quantum Computing affordable and 
+    accessible — not just for tech giants, 
+    but for every small startup, student, 
+    and researcher in the world.<br><br>
+    To build a world-scale quantum technology 
+    company that employs thousands of 
+    Physics graduates from India and creates 
+    products used by everyone on Earth.
+    </p>
+
+    <h3 style="color:#00ffff;margin:20px 0 10px">
+    🚀 Roadmap
+    </h3>
+    <p style="color:#aaa;line-height:1.8">
+    V1 → Basic Quantum Simulations ✅<br>
+    V2 → Advanced Algorithms + Better UI ⏳<br>
+    V3 → Mobile App 📱<br>
+    V4 → AI + Quantum Combined 🤖<br>
+    V5 → World Scale 🌍
+    </p>
+
+    <div style="text-align:center;margin-top:25px">
+        <a href="https://github.com/pravakutty/Quantum-OS"
+        style="color:#00ffff;text-decoration:none;
+        border:1px solid #00ffff;padding:10px 25px;
+        border-radius:25px">
+        ⭐ GitHub
+        </a>
+    </div>
+</div>                          
         Built with ❤️ using Python + Qiskit |
         Quantum Computing for Everyone
     </div>
